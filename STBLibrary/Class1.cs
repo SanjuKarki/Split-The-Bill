@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
-/// <summary>
-/// A method that takes in an amount (currency) and the number of people, then returns the split amount.
-/// </summary>
 public class MyClass
 {
     public decimal SplitAmountByPeople(decimal amount, int numberOfPeople)
@@ -15,14 +10,6 @@ public class MyClass
         return Math.Round(amount / numberOfPeople, 2); // Round to 2 decimal places
     }
 
-/// <summary>
-/// A method with two arguments: a dictionary of <String, Decimal> and a float. The string will be the name, and the decimal will be the amount their meal costs. The float argument will represent the percentage for the Tip. This method will return a dictionary of names and the amount each person pays for the Tip. Use the URL in the description to see how to calculate a weighted average.
-/// </summary>
-/// <param name="mealCosts"></param>
-/// <param name="tipPercentage"></param>
-/// <returns></returns>
-/// <exception cref="ArgumentNullException"></exception>
-/// <exception cref="ArgumentException"></exception>
     public Dictionary<string, decimal> CalculateTipPerPerson(Dictionary<string, decimal> mealCosts, float tipPercentage)
     {
         if (mealCosts == null)
@@ -36,7 +23,7 @@ public class MyClass
 
         decimal totalAmountWithTip = totalCost + tipAmount;
 
-        Dictionary<string, decimal> tipPerPerson = new Dictionary<string, decimal>();
+        var tipPerPerson = new Dictionary<string, decimal>();
         foreach (var kvp in mealCosts)
         {
             decimal individualTip = kvp.Value / totalCost * tipAmount;
@@ -44,5 +31,14 @@ public class MyClass
         }
 
         return tipPerPerson;
+    }
+
+    public decimal CalculateTipPerPerson(decimal price, int numberOfPatrons, float tipPercentage)
+    {
+        if (numberOfPatrons <= 0)
+            throw new ArgumentException("Number of patrons must be greater than zero.");
+
+        decimal tipAmount = price * (decimal)(tipPercentage / 100);
+        return Math.Round(tipAmount / numberOfPatrons, 2); // Round to 2 decimal places
     }
 }

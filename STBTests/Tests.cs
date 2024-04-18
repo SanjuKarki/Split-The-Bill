@@ -90,11 +90,56 @@ public class MyTests
         var myClass = new MyClass();
         var mealCosts = new Dictionary<string, decimal>
         {
-            { "Alice", 50 }
+            { "Sanju", 50 }
         };
         float invalidTipPercentage = -5;
 
         // Act and Assert
         Assert.ThrowsException<ArgumentException>(() => myClass.CalculateTipPerPerson(mealCosts, invalidTipPercentage));
+    }
+
+/// <summary>
+/// Test for  a method that takes in a decimal for the price, the number of patrons, and the percentage for the tip. This method will return the amount for the tip per person.
+/// </summary>
+    [TestMethod]
+    public void TestCalculateTipPerPerson_WhenValidInputs_ReturnsCorrectTipPerPerson()
+    {
+        // Arrange
+        var myClass = new MyClass();
+        decimal price = 100;
+        int numberOfPatrons = 5;
+        float tipPercentage = 15;
+
+        // Act
+        decimal tipPerPerson = myClass.CalculateTipPerPerson(price, numberOfPatrons, tipPercentage);
+
+        // Assert
+        Assert.AreEqual(3M, tipPerPerson); // Assuming correct tip per person for this example
+    }
+
+    [TestMethod]
+    public void TestCalculateTipPerPerson_ZeroPatrons_ThrowsArgumentException()
+    {
+        // Arrange
+        var myClass = new MyClass();
+        decimal price = 100;
+        int numberOfPatrons = 0;
+        float tipPercentage = 15;
+
+        // Act and Assert
+        Assert.ThrowsException<ArgumentException>(() => myClass.CalculateTipPerPerson(price, numberOfPatrons, tipPercentage));
+    }
+
+    [TestMethod]
+    public void TestCalculateTipPerPerson_NegativePatrons_ThrowsArgumentException()
+    {
+        // Arrange
+        var myClass = new MyClass();
+        decimal price = 100;
+        int numberOfPatrons = -1;
+        float tipPercentage = 15;
+
+        // Act and Assert
+        Assert.ThrowsException<ArgumentException>(() => myClass.CalculateTipPerPerson(price, numberOfPatrons, tipPercentage));
     }
 }
